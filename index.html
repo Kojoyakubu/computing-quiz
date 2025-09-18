@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computing Quiz</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header-container">
+        <div class="timer-container">
+            Time remaining: <span id="timer">55:00</span>
+        </div>
+        <div id="score-display" class="score-container">
+            Score: <span id="score-value">0/0</span>
+        </div>
+        <div class="placeholder"></div>
+    </div>
+
+    <div id="landing-page" class="landing-page container fade-in">
+        <img src="./images/PRESBY.jpg" alt="Computing Quiz Logo" class="quiz-logo">
+        <h1>Welcome to the Computing Quiz!</h1>
+        <p>Test your knowledge on the fundamentals of computing.</p>
+        <button id="start-btn">Start Quiz</button>
+    </div>
+
+    <div id="quiz-container" class="container hidden">
+        <form id="quiz-form">
+            </form>
+        <button id="submit-btn">Submit Quiz</button>
+        <div id="results"></div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2>Time's Up!</h2>
+            <p>The quiz has been automatically submitted.</p>
+            <button id="modal-ok-btn">OK</button>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; James Anim Gyeke. All Rights Reserved.</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
