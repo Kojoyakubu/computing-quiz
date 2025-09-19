@@ -1,5 +1,5 @@
 const quizQuestions = [
-    // ... all your questions from the previous version
+    // The existing 50 questions
     {
         question: "1. Which of the following is considered a key feature of fourth-generation computers?",
         options: ["Use of vacuum tubes", "Introduction of the microchip", "Large and bulky size", "Use of punch cards"],
@@ -37,7 +37,7 @@ const quizQuestions = [
     },
     {
         question: "8. Which of the following is a type of magnetic storage device?",
-        options: ["Blu-ray Disc", "Solid-State Drive (SSD)", "Hard Disk Drive (HDD)", "CD-ROM"],
+    options: ["Blu-ray Disc", "Solid-State Drive (SSD)", "Hard Disk Drive (HDD)", "CD-ROM"],
         answer: "Hard Disk Drive (HDD)"
     },
     {
@@ -259,15 +259,27 @@ const timerDisplay = document.getElementById('timer');
 const scoreDisplay = document.getElementById('score-display');
 const scoreValue = document.getElementById('score-value');
 const modal = document.getElementById('modal');
+const modalTitle = modal.querySelector('h2');
+const modalMessage = modal.querySelector('p');
 const modalOkBtn = document.getElementById('modal-ok-btn');
 
-// New UI Elements
 const landingPage = document.getElementById('landing-page');
 const startBtn = document.getElementById('start-btn');
 const quizContainer = document.getElementById('quiz-container');
 
 let timeLeft = 3300;
 let timerInterval;
+
+/**
+ * Shuffles an array using the Fisher-Yates algorithm.
+ * @param {Array} array The array to shuffle.
+ */
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
 
 function getPerformanceData(score) {
     if (score >= 45) {
@@ -287,8 +299,9 @@ function renderQuestions() {
         const questionDiv = document.createElement('div');
         questionDiv.classList.add('question');
 
+        // This line has been updated to use the question's new index for numbering
         questionDiv.innerHTML = `
-            <h3>${q.question}</h3>
+            <h3>${index + 1}. ${q.question.substring(q.question.indexOf(' ') + 1)}</h3>
             <div class="options">
                 ${q.options.map((option, optionIndex) => `
                     <label>
@@ -340,7 +353,7 @@ function showResults() {
         const reviewItem = document.createElement('div');
         reviewItem.classList.add('review-item', isCorrect ? 'correct' : 'incorrect');
         reviewItem.innerHTML = `
-            <p><strong>Question ${index + 1}:</strong> ${q.question}</p>
+            <p><strong>Question ${index + 1}:</strong> ${q.question.substring(q.question.indexOf(' ') + 1)}</p>
             <p>Your Answer: <span class="user-answer">${selectedOption || 'No answer selected'}</span></p>
             ${!isCorrect ? `<p>Correct Answer: <span class="correct-answer">${q.answer}</span></p>` : ''}
         `;
@@ -366,6 +379,8 @@ function showResults() {
 function autoSubmitQuiz() {
     disableQuiz();
     showResults();
+    modalTitle.textContent = "Time's Up!";
+    modalMessage.textContent = "The quiz has been automatically submitted.";
     modal.classList.add('show-modal');
 }
 
@@ -374,6 +389,8 @@ function manualSubmitQuiz(event) {
     clearInterval(timerInterval);
     disableQuiz();
     showResults();
+    modalTitle.textContent = "Quiz Completed!";
+    modalMessage.textContent = "Successfully submitted.";
     modal.classList.add('show-modal');
 }
 
@@ -391,5 +408,6 @@ startBtn.addEventListener('click', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    shuffleArray(quizQuestions);
     renderQuestions();
 });
